@@ -1,0 +1,18 @@
+do
+
+let  pat = "{1011001100000}%8"
+     rest = "{[001]/3[01]/21[10]/211}%8"
+     clapMask = "00[1]0"
+d1
+
+$ stack [
+  mask rest $ mask (inc clapMask)
+      $ mask pat $ struct "1*8" $ midichan 2
+    , mask rest $ mask clapMask 
+      $ struct "1*4" $ midichan 3 
+    , mask rest $ mask (inv pat) $ midichan "[67]*8"
+    , foldEvery [2,3] (mask"{011011000}%16")
+      $ struct "1*16" $ midichan 10
+  ] # s "rytm" # note "c3" # gain 1.25
+
+hush
